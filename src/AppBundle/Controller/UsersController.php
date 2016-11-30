@@ -161,4 +161,41 @@ class UsersController extends Controller
 
         //return new JsonResponse($response);
     }
+
+    public function deleteUserAction($slug)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $res = new Response($serializer->serialize($slug,'json'));
+        $res->headers->set('Content-Type', 'application/json');
+        $res->headers->set('Access-Control-Allow-origin','*');
+        return $res;
+    } // "delete_user"          [DELETE] /users/{slug}
+
+    //remove user
+    public function removeUserAction($id)
+    {
+        $result = array();
+        $image = new Image();
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->find($id);
+        if (!$user) {
+            $result['code'] = 201;
+        }
+        $result['code'] = 200;
+        $em->remove($user);
+        //$image->removeUser($user);
+        $em->flush();
+
+
+        $serializer = $this->get('jms_serializer');
+
+        $res = new Response($serializer->serialize($result,'json'));
+        $res->headers->set('Content-Type', 'application/json');
+        $res->headers->set('Access-Control-Allow-origin','*');
+        return $res;
+    }
+
+
+
 }

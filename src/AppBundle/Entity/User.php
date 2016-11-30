@@ -89,7 +89,7 @@ class User implements  AdvancedUserInterface , \Serializable
     private $email;
     //related with entity Address
     /**
-     * @ORM\ManyToOne(targetEntity="Address", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="users", cascade={"remove"})
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id", onDelete="CASCADE")
      * @JMS\Expose
      */
@@ -119,7 +119,7 @@ class User implements  AdvancedUserInterface , \Serializable
 
     //relation with entity Image
     /**
-     * @ORM\ManyToOne(targetEntity="Image", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Image", inversedBy="users", cascade={"remove"})
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
      * @JMS\Expose
      */
