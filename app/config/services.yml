@@ -2,6 +2,9 @@
 # http://symfony.com/doc/current/service_container.html
 parameters:
 #    parameter_name: value
+    # BaseManager load class parameter to service
+    manager.class: AppBundle\Entity\Manager\BaseManager
+    manager.user.entity: AppBundle\Entity\User
 
 services:
 #    service_name:
@@ -13,3 +16,10 @@ services:
      jms_serializer.object_constructor:
             alias: jms_serializer.doctrine_object_constructor
             public: false
+
+#Listener for Cros Browser request and exceptions to json
+     api_exception_subscriber:
+            class: AppBundle\EventListener\ApiExceptionSubscriber
+            arguments: ['@jms_serializer', '@service_container']
+            tags:
+                - { name: kernel.event_subscriber }
