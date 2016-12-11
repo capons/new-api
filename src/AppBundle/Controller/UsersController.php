@@ -29,8 +29,7 @@ class UsersController extends Controller
     {
 
         $response = array();
-       // header("Access-Control-Allow-origin: *");
-       // header("Content-Type: application/json");
+
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User');
@@ -42,8 +41,7 @@ class UsersController extends Controller
        // $response['body'] = $all_user;//$array;
 
         $res = new Response($serializer->serialize($all_user,'json'));
-     //   $res->headers->set('Content-Type', 'application/json');
-     //   $res->headers->set('Access-Control-Allow-origin','*');
+
         return $res;
 
     //    return new Response($serializer->serialize($response,'json'));
@@ -155,16 +153,26 @@ class UsersController extends Controller
        // $array = $serializer->toArray($last_object);
        // $response['body'] = $array;
         $res = new Response($serializer->serialize($last_object,'json'));
-     //   $res->headers->set('Content-Type', 'application/json');
-     //   $res->headers->set('Access-Control-Allow-origin','*');
+        $res->headers->set('Content-Type', 'application/json');
+        $res->headers->set('Access-Control-Allow-origin','*');
         return $res;
 
         //return new JsonResponse($response);
     }
 
-    public function deleteUserAction($id)
+    public function deleteUserAction($slug)
     {
+        $serializer = $this->get('jms_serializer');
 
+        $res = new Response($serializer->serialize($slug,'json'));
+        $res->headers->set('Content-Type', 'application/json');
+        $res->headers->set('Access-Control-Allow-origin','*');
+        return $res;
+    } // "delete_user"          [DELETE] /users/{slug}
+
+    //remove user
+    public function removeUserAction($id)
+    {
         $result = array();
         $image = new Image();
         $em = $this->getDoctrine()->getManager();
@@ -181,12 +189,10 @@ class UsersController extends Controller
         $serializer = $this->get('jms_serializer');
 
         $res = new Response($serializer->serialize($result,'json'));
-      //  $res->headers->set('Content-Type', 'application/json');
-      //  $res->headers->set('Access-Control-Allow-origin','*');
+        $res->headers->set('Content-Type', 'application/json');
+        $res->headers->set('Access-Control-Allow-origin','*');
         return $res;
-    } // "delete_user"          [DELETE] /users/{slug}
-
-
+    }
 
 
 

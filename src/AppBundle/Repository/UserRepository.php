@@ -20,6 +20,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    //rewrite doctrine method with sort parameter
+    public function findAll()
+    {
+        return $this->findBy(array(), array('id' => 'DESC'));
+    }
     /*
     public function loadUserData()
     {
