@@ -23,3 +23,12 @@ services:
             arguments: ['@jms_serializer', '@service_container']
             tags:
                 - { name: kernel.event_subscriber }
+
+
+     app.tokens.action_listener:
+            class: AppBundle\EventListener\TokenListener
+            arguments: ['%tokens%','@doctrine.orm.entity_manager']
+            tags:
+                - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+                - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
