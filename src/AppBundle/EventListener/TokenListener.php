@@ -59,7 +59,13 @@ class TokenListener
          //   if (!in_array($token, $this->tokens)) {
             if(!$user) {
                 //return error -> token not correct
-                throw new AccessDeniedHttpException('This action needs a valid token!');
+
+
+                //if API token incorrect return 404 error
+                //throw new AccessDeniedHttpException('This action needs a valid token!');
+
+
+
               //  echo 'invalid token';
              //   echo $event->getRequest()->headers->get('Authorization');
              //   die();
